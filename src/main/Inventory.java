@@ -185,6 +185,7 @@ public class Inventory {
 	}
 	public void compareYDK(String path) {
 		HashMap<String, Integer> inputDeck = new HashMap<String, Integer>();
+		ArrayList<String> removals = new ArrayList<String>();
 		File f = new File(path);
 		Scanner sc;
 		try {
@@ -215,13 +216,16 @@ public class Inventory {
 			for (Entry<String, Integer> mapElement : inputDeck.entrySet()) {
 				if ((inventory.containsKey(mapElement.getKey()))) {
 					if(inventory.get(mapElement.getKey())>=mapElement.getValue()) {
-						inputDeck.remove(mapElement.getKey());
+						removals.add(mapElement.getKey());
 					}
 					else {
 						inputDeck.put(mapElement.getKey(),(mapElement.getValue()-inventory.get(mapElement.getKey())));
 					}
 				}
 	            
+			}
+			for (String i : removals) {
+				inputDeck.remove(i);
 			}
 			if (!(inputDeck.isEmpty())) {
 				System.out.println("found 1 or more missing cards");
